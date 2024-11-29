@@ -58,7 +58,10 @@ app.get("/webhook", (req, res) => {
 });
 
 app.post("/webhook", async (req, res) => {
-  let body_param = req.body;
+    let body_param = req.body;
+    
+    console.log("this is params body");
+    console.log(body_param);
 
   if (body_param.object) {
     if (
