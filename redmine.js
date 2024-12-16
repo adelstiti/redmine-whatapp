@@ -49,6 +49,7 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
     throw new Error(error);
   }
   try {
+    console.log("thisaaser")
     let response = await axios.get(
       `${apiUrl}/users/${userId}.json`,
       axiosConfig

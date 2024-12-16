@@ -59,10 +59,6 @@ app.get("/webhook", (req, res) => {
 
 app.post("/webhook", async (req, res) => {
     let body_param = req.body;
-    
-    console.log("this is params body");
-    console.log(body_param);
-
   if (body_param.object) {
     if (
       body_param.entry &&
@@ -98,6 +94,7 @@ app.post("/webhook", async (req, res) => {
       // get redmine tokens
       admin_token = process.env.ADMIN_TOKEN;
       user_token = await getUserTokenByPhoneNumber(from);
+      console.log("tokenn 1", user_token)
       // Process user input based on current state
       switch (userSessions[from].state) {
         case "idle":
@@ -106,7 +103,8 @@ app.post("/webhook", async (req, res) => {
             msg_body.toLowerCase() === "creer"
           ) {
             userSessions[from].state = "awaiting_project_selection";
-            try {
+              try {
+                console.log("token 1", user_token)
               const projects = await getUserProjectsByToken(user_token);
               if (projects.length === 0) {
                 await sendMessage(
@@ -250,6 +248,7 @@ app.post("/webhook", async (req, res) => {
             }
           } else if (msg_body.toLowerCase() === "projet") {
             try {
+                console.log("token 2", user_token)
               const projects = await getUserProjectsByToken(user_token);
               if (projects.length === 0) {
                 await sendMessage(
@@ -333,6 +332,7 @@ app.post("/webhook", async (req, res) => {
             break;
           }
           userSessions[from].selectedProjectId = msg_body;
+          console.log("token aa", user_token)
           validProjects = await getUserProjectsByToken(user_token);
           if (validProjects.some((p) => p.id == msg_body)) {
             userSessions[from].state = "awaiting_subject";
