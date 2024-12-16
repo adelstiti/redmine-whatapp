@@ -52,7 +52,11 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
     let response = await axios.get(
       `${apiUrl}/users/${userId}.json`,
       axiosConfig
-    );
+      );
+      
+    console.log("this is user")
+    console.log(data)
+    
     return response.data.user.api_key;
   } catch (error) {
     console.log(error);
