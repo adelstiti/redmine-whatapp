@@ -250,9 +250,7 @@ app.post("/webhook", async (req, res) => {
             }
           } else if (msg_body.toLowerCase() === "projet") {
             try {
-              console.log(user_token);
               const projects = await getUserProjectsByToken(user_token);
-              console.log(projects);
               if (projects.length === 0) {
                 await sendMessage(
                   from,

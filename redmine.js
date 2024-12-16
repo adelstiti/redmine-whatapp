@@ -32,10 +32,9 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
     );
     let users = response.data.users;
 
-      let user = users.find((user) => {
-        console.log("user", user)
+    let user = users.find((user) => {
       let phoneField = user.custom_fields.find(
-        (field) => field.name === "Phone Number"
+        (field) => field.name === "phone"
       );
       return phoneField && phoneField.value === phone_number;
     });
