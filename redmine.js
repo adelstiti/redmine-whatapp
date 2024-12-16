@@ -39,6 +39,7 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
       return phoneField && phoneField.value === phone_number;
     });
 
+      console.log(user, phone_number);
     if (user) {
       userId = user.id; // Assuming 'api_key' holds the token
     } else {
@@ -47,7 +48,9 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
   } catch (error) {
     console.log(error);
     throw new Error(error);
-  }
+    }
+    
+
   try {
     console.log("thisaaser")
     let response = await axios.get(
@@ -56,7 +59,7 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
       );
       
     console.log("this is user")
-    console.log(data)
+    console.log(response)
     
     return response.data.user.api_key;
   } catch (error) {
