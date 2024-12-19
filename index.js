@@ -95,7 +95,7 @@ app.post("/webhook", async (req, res) => {
       user_token = await getUserTokenByPhoneNumber(from);
       
         if (!user_token) {
-            await sendMessage(
+           return await sendMessage(
                 from,
                 phon_no_id,
                 "⚠️ Votre numéro de téléphone n'est pas enregistré. Veuillez l'ajouter à votre compte Redmine."
