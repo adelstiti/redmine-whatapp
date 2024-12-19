@@ -57,6 +57,7 @@ app.get("/webhook", (req, res) => {
 });
 
 app.post("/webhook", async (req, res) => {
+    console.log('ddd')
     let body_param = req.body;
   if (body_param.object) {
     if (
@@ -94,13 +95,14 @@ app.post("/webhook", async (req, res) => {
       admin_token = process.env.ADMIN_TOKEN;
       user_token = await getUserTokenByPhoneNumber(from);
       
-        if (!user_token) {
-           return await sendMessage(
-                from,
-                phon_no_id,
-                "⚠️ Votre numéro de téléphone n'est pas enregistré. Veuillez l'ajouter à votre compte Redmine."
-            );
-        }
+        // if (!user_token) {
+        // await sendMessage(
+        //         from,
+        //         phon_no_id,
+        //         "⚠️ Votre numéro de téléphone n'est pas enregistré. Veuillez l'ajouter à votre compte Redmine."
+        //     );
+
+        // }
         
       // Process user input based on current state
       switch (userSessions[from].state) {
