@@ -44,7 +44,6 @@ app.listen(process.env.PORT || 3000, () => {
 
 // to verify the callback url from dashboard side - cloud api side
 app.get("/webhook", (req, res) => {
-    console.log(req.query)
   let mode = req.query["hub.mode"];
   let challenge = req.query["hub.challenge"];
   let token = req.query["hub.verify_token"];
@@ -94,7 +93,15 @@ app.post("/webhook", async (req, res) => {
       // get redmine tokens
       admin_token = process.env.ADMIN_TOKEN;
       user_token = await getUserTokenByPhoneNumber(from);
-      console.log("tokenn 1", user_token)
+      
+        if (!user_token) {
+            await sendMessage(
+                from,
+                phon_no_id,
+                "⚠️ Votre numéro de téléphone n'est pas enregistré. Veuillez l'ajouter à votre compte Redmine."
+            );
+        }
+        
       // Process user input based on current state
       switch (userSessions[from].state) {
         case "idle":
@@ -104,7 +111,6 @@ app.post("/webhook", async (req, res) => {
           ) {
             userSessions[from].state = "awaiting_project_selection";
               try {
-                console.log("token 1", user_token)
               const projects = await getUserProjectsByToken(user_token);
               if (projects.length === 0) {
                 await sendMessage(
@@ -183,7 +189,6 @@ app.post("/webhook", async (req, res) => {
               let project_id = msg_body.split(" ")[2];
               try {
                 let response = await deleteProject(project_id);
-                console.log(response);
                 await sendMessage(
                   from,
                   phon_no_id,
@@ -248,7 +253,6 @@ app.post("/webhook", async (req, res) => {
             }
           } else if (msg_body.toLowerCase() === "projet") {
             try {
-                console.log("token 2", user_token)
               const projects = await getUserProjectsByToken(user_token);
               if (projects.length === 0) {
                 await sendMessage(
@@ -332,7 +336,6 @@ app.post("/webhook", async (req, res) => {
             break;
           }
           userSessions[from].selectedProjectId = msg_body;
-          console.log("token aa", user_token)
           validProjects = await getUserProjectsByToken(user_token);
           if (validProjects.some((p) => p.id == msg_body)) {
             userSessions[from].state = "awaiting_subject";

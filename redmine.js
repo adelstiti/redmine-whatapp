@@ -36,10 +36,16 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
       let phoneField = user.custom_fields.find(
         (field) => field.name === "phone"
       );
-      return phoneField && phoneField.value === phone_number;
+
+      const phoneNumber = phoneField.value.replace(/\D/g, "");
+      return (
+        phoneField &&
+        (phoneNumber === phone_number ||
+          phone_number === `00${phoneNumber}` ||
+          phone_number === `216${phoneNumber}`)
+      );
     });
 
-      console.log(user, phone_number);
     if (user) {
       userId = user.id; // Assuming 'api_key' holds the token
     } else {
@@ -48,19 +54,14 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
   } catch (error) {
     console.log(error);
     throw new Error(error);
-    }
-    
+  }
 
   try {
-    console.log("thisaaser")
     let response = await axios.get(
       `${apiUrl}/users/${userId}.json`,
       axiosConfig
-      );
-      
-    console.log("this is user")
-    console.log(response)
-    
+    );
+
     return response.data.user.api_key;
   } catch (error) {
     console.log(error);
