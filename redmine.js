@@ -37,7 +37,7 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
         (field) => field.name === "phone"
       );
 
-      const phoneNumber = phoneField.value.replace(/\D/g, "");
+      const phoneNumber = phoneField.value?.replace(/\D/g, "");
       return (
         phoneField &&
         (phoneNumber === phone_number ||
