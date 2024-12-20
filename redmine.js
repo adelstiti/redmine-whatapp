@@ -23,26 +23,21 @@ const axiosConfig = {
 };
 
 //////////////////////////////////////// users ////////////////////////////////////////
-const getUserTokenByPhoneNumber = async (phone_number) => {
-
+const getUserTokenByPhoneNumber = async (phone_number, name) => {
   let userId = null;
   try {
     let response = await axios.get(
-      `${apiUrl}/users.json?include=custom_fields`,
+      `${apiUrl}/users.json?include=custom_fields&limit=100&name=${name}`,
       axiosConfig
     );
     let users = response.data.users;
-    console.log("users", users)
 
     let user = users.find((user) => {
       let phoneField = user.custom_fields.find(
         (field) => field.name === "phone"
       );
-      console.log("phoneField", phoneField)
 
-        const phoneNumber = phoneField.value ?? '';
-        console.log("phone_number", phone_number)
-        console.log("phoneNumber", phoneNumber)
+        const phoneNumber = phoneField.value?.replace(/\D/g, "");
       return (
         phoneField &&
         (phoneNumber === phone_number ||
@@ -51,7 +46,6 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
       );
     });
 
-      console.log(user, "user")
     if (user) {
       userId = user.id; // Assuming 'api_key' holds the token
     } else {

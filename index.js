@@ -92,7 +92,7 @@ app.post("/webhook", async (req, res) => {
       }
       // get redmine tokens
       admin_token = process.env.ADMIN_TOKEN;
-      user_token = await getUserTokenByPhoneNumber(from);
+      user_token = await getUserTokenByPhoneNumber(from, user_name);
       
       // Process user input based on current state
       switch (userSessions[from].state) {
