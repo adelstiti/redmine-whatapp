@@ -37,7 +37,8 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
         (field) => field.name === "phone"
       );
 
-      const phoneNumber = phoneField.value?.replace(/\D/g, "");
+        const phoneNumber = phoneField.value?.replace(/\D/g, "");
+        console.log("phoneNumber", phoneNumber)
       return (
         phoneField &&
         (phoneNumber === phone_number ||
@@ -46,6 +47,7 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
       );
     });
 
+      console.log(user, "user")
     if (user) {
       userId = user.id; // Assuming 'api_key' holds the token
     } else {
