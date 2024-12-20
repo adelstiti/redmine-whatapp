@@ -24,7 +24,6 @@ const axiosConfig = {
 
 //////////////////////////////////////// users ////////////////////////////////////////
 const getUserTokenByPhoneNumber = async (phone_number) => {
-    console.log("phone_number", phoneNumber)
 
   let userId = null;
   try {
