@@ -32,6 +32,7 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
       axiosConfig
     );
     let users = response.data.users;
+    console.log("users", users)
 
     let user = users.find((user) => {
       let phoneField = user.custom_fields.find(
