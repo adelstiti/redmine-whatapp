@@ -71,7 +71,7 @@ const getUserTokenByPhoneNumber = async (phone_number, name) => {
 
 const getUserProjectsByToken = async (token) => {
   try {
-    let response = await axios.get(`${apiUrl}/projects.json`, {
+    let response = await axios.get(`${apiUrl}/projects.json?limit=100`, {
       headers: {
         "X-Redmine-API-Key": token,
         "Content-Type": "application/json",
@@ -121,7 +121,7 @@ const createIssueFromUser = async (token, issue) => {
  */
 const getAllIssues = async () => {
   try {
-    let response = await axios.get(`${apiUrl}/issues.json`, axiosConfig);
+    let response = await axios.get(`${apiUrl}/issues.json?limit=100`, axiosConfig);
     return response.data;
   } catch (error) {
     console.log(error);
