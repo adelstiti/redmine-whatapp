@@ -24,6 +24,8 @@ const axiosConfig = {
 
 //////////////////////////////////////// users ////////////////////////////////////////
 const getUserTokenByPhoneNumber = async (phone_number) => {
+    console.log("phone_number", phoneNumber)
+
   let userId = null;
   try {
     let response = await axios.get(
@@ -36,8 +38,10 @@ const getUserTokenByPhoneNumber = async (phone_number) => {
       let phoneField = user.custom_fields.find(
         (field) => field.name === "phone"
       );
+      console.log("phoneField", phoneField)
 
-        const phoneNumber = phoneField.value?.replace(/\D/g, "");
+        const phoneNumber = phoneField.value ?? '';
+        console.log("phone_number", phone_number)
         console.log("phoneNumber", phoneNumber)
       return (
         phoneField &&
